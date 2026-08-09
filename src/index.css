@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #070707;
+  --bg-soft: #0f0f0f;
+  --surface: #131313;
+  --surface-elevated: #1b1b1b;
+  --border: #2f2f2f;
+  --text: #f4f4f4;
+  --text-muted: #bababa;
+  --danger: #ff6f6f;
+  --warning: #ffe27a;
+  --shadow: 0 18px 45px rgba(0, 0, 0, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'IBM Plex Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 12% 16%, #212121 0%, transparent 24%),
+    radial-gradient(circle at 88% 84%, #1a1a1a 0%, transparent 26%),
+    linear-gradient(135deg, var(--bg) 0%, #000000 100%);
+}
+
+a {
+  color: inherit;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
