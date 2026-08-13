@@ -2,8 +2,14 @@ import React from 'react';
 import ErrorBox from '../../Reusable/ErrorBox';
 import AirConditionsItem from './AirConditionsItem';
 import Layout from '../../Reusable/Layout';
+import { useTempUnit } from '../../../context/UnitContext';
+import {
+  formatTemperature,
+  formatWindSpeed,
+} from '../../../utilities/UnitUtils';
 
 const TodayWeatherAirConditions = ({ data }) => {
+  const { unit } = useTempUnit();
   const noDataProvided =
     !data || Object.keys(data).length === 0 || data.cod === '404';
 
@@ -14,12 +20,12 @@ const TodayWeatherAirConditions = ({ data }) => {
       <>
         <AirConditionsItem
           title="Real Feel"
-          value={`${Math.round(data.main.feels_like)} °C`}
+          value={formatTemperature(data.main.feels_like, unit)}
           type="temperature"
         />
         <AirConditionsItem
           title="Wind"
-          value={`${data.wind.speed} m/s`}
+          value={formatWindSpeed(data.wind.speed, unit)}
           type="wind"
         />
         <AirConditionsItem

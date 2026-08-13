@@ -1,14 +1,19 @@
 import React from 'react';
 import { Box, Grid } from '@mui/material';
-import { getWeekDays } from '../../utilities/DatetimeUtils';
+import { getWeekdayFromDateString } from '../../utilities/DatetimeUtils';
 import { weatherIcon } from '../../utilities/IconsUtils';
 import WeeklyForecastItem from './WeeklyForecastItem';
 import ErrorBox from '../Reusable/ErrorBox';
 import DayWeatherDetails from './DayWeatherDetails';
 import Layout from '../Reusable/Layout';
+import { useTempUnit } from '../../context/UnitContext';
+import {
+  formatTemperature,
+  formatWindSpeed,
+} from '../../utilities/UnitUtils';
 
 const WeeklyForecast = ({ data }) => {
-  const forecastDays = getWeekDays();
+  const { unit } = useTempUnit();
 
   const noDataProvided =
     !data ||
@@ -24,15 +29,12 @@ const WeeklyForecast = ({ data }) => {
 
   if (!noDataProvided)
     content = (
-      <Grid
-        container
-        gap={1}
-      >
+      <Grid container gap={1}>
         {data.list.map((item, idx) => {
           return (
             <Grid
               item
-              key={idx}
+              key={`${item.date}-${idx}`}
               xs={12}
               container
               alignItems="center"
@@ -41,12 +43,16 @@ const WeeklyForecast = ({ data }) => {
                 px: '.6rem',
                 border: '1px solid var(--border)',
                 borderRadius: '10px',
-                background:
-                  'linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015))',
+                background: 'var(--panel-gradient)',
+                backgroundColor: 'var(--surface-elevated)',
+                transition: 'border-color .2s ease, transform .2s ease',
+                '&:hover': {
+                  borderColor: 'var(--text-muted)',
+                },
               }}
             >
               <DayWeatherDetails
-                day={forecastDays[idx]}
+                day={getWeekdayFromDateString(item.date)}
                 src={weatherIcon(`${item.icon}`)}
                 description={item.description}
               />
@@ -60,12 +66,11 @@ const WeeklyForecast = ({ data }) => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  pl: { xs: 0, sm: 0 },
                 }}
               >
                 <WeeklyForecastItem
                   type="temperature"
-                  value={Math.round(item.temp) + ' °C'}
+                  value={formatTemperature(item.temp, unit)}
                 />
                 <WeeklyForecastItem
                   type="clouds"
@@ -82,12 +87,11 @@ const WeeklyForecast = ({ data }) => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  pl: { xs: 0, sm: 0 },
                 }}
               >
                 <WeeklyForecastItem
                   type="wind"
-                  value={item.wind + ' m/s'}
+                  value={formatWindSpeed(item.wind, unit)}
                 />
                 <WeeklyForecastItem
                   type="humidity"

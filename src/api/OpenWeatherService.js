@@ -2,6 +2,8 @@ const GEO_API_URL = 'https://wft-geo-db.p.rapidapi.com/v1/geo';
 
 const WEATHER_API_URL = 'https://api.openweathermap.org/data/2.5';
 const OPENWEATHER_GEO_URL = 'https://api.openweathermap.org/geo/1.0/direct';
+const OPENWEATHER_REVERSE_GEO_URL =
+  'https://api.openweathermap.org/geo/1.0/reverse';
 const WEATHER_API_KEY = process.env.REACT_APP_OPENWEATHER_API_KEY || '';
 const RAPID_API_KEY = process.env.REACT_APP_RAPIDAPI_KEY || '';
 
@@ -61,6 +63,31 @@ export async function fetchWeatherData(lat, lon) {
   } catch (error) {
     throw error;
   }
+}
+
+export async function reverseGeocode(lat, lon) {
+  ensureWeatherApiKey();
+
+  const response = await fetch(
+    `${OPENWEATHER_REVERSE_GEO_URL}?lat=${lat}&lon=${lon}&limit=1&appid=${WEATHER_API_KEY}`
+  );
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      getErrorMessage(data, 'Unable to resolve your current location.')
+    );
+  }
+
+  if (!Array.isArray(data) || data.length === 0) {
+    throw new Error('No city found for your current location.');
+  }
+
+  const place = data[0];
+  return {
+    value: `${place.lat} ${place.lon}`,
+    label: `${place.name}, ${place.country}`,
+  };
 }
 
 export async function fetchCities(input) {

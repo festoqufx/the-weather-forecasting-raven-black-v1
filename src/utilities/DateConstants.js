@@ -13,14 +13,15 @@ export const MONTHS = [
   'December',
 ];
 
+// Index order matches Date.prototype.getDay() (Sunday = 0).
 export const DAYS = [
+  'Sunday',
   'Monday',
   'Tuesday',
   'Wednesday',
   'Thursday',
   'Friday',
   'Saturday',
-  'Sunday',
 ];
 
 export const ALL_DESCRIPTIONS = [

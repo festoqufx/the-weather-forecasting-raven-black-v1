@@ -1,17 +1,27 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
 import { weatherIcon } from '../../../utilities/IconsUtils';
+import { useTempUnit } from '../../../context/UnitContext';
+import { formatTemperature } from '../../../utilities/UnitUtils';
 
 const DailyForecastItem = ({ item }) => {
+  const { unit } = useTempUnit();
+
   return (
     <Box
       sx={{
-        background: 'linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015))',
+        background: 'var(--panel-gradient)',
+        backgroundColor: 'var(--surface-elevated)',
         border: '1px solid var(--border)',
         borderRadius: '10px',
         textAlign: 'center',
         padding: '.35rem .25rem',
         width: '100%',
+        transition: 'border-color .2s ease, transform .2s ease',
+        '&:hover': {
+          borderColor: 'var(--text-muted)',
+          transform: 'translateY(-2px)',
+        },
       }}
     >
       <Typography
@@ -47,7 +57,7 @@ const DailyForecastItem = ({ item }) => {
             alignSelf: 'center',
             margin: '0 auto',
           }}
-          alt="Forecast weather icon"
+          alt=""
           src={weatherIcon(`${item.icon}.png`)}
         />
       </Box>
@@ -64,7 +74,7 @@ const DailyForecastItem = ({ item }) => {
           fontFamily: 'Space Grotesk',
         }}
       >
-        {item.temperature}
+        {formatTemperature(item.temperature, unit)}
       </Typography>
     </Box>
   );

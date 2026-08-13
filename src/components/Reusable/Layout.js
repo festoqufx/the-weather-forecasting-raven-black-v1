@@ -12,10 +12,12 @@ const Layout = ({ content, title, sx, mb, sectionSubHeader }) => {
             width: '100%',
             border: '1px solid var(--border)',
             borderRadius: '14px',
-            background: 'linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.015))',
+            background: 'var(--panel-gradient)',
+            backgroundColor: 'var(--surface)',
             px: { xs: 1.2, sm: 1.6, md: 1.9 },
             py: { xs: 1.2, sm: 1.5 },
             overflow: 'hidden',
+            transition: 'border-color .2s ease, background-color .2s ease',
           }}
         >
           <SectionHeader title={title} mb={mb || '.9rem'} />

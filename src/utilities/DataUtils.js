@@ -129,7 +129,7 @@ export const getTodayForecastWeather = (
           allTodayForecasts.push({
             time: item.dt_txt.split(' ')[1].substring(0, 5),
             icon: item.weather[0].icon,
-            temperature: Math.round(item.main.temp) + ' °C',
+            temperature: Math.round(item.main.temp),
           });
         }
       }

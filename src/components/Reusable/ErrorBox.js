@@ -1,5 +1,6 @@
 import * as React from 'react';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 
@@ -8,6 +9,7 @@ export default function ErrorBox(props) {
 
   return (
     <Box
+      role={isInfo ? 'status' : 'alert'}
       display={props.display || 'flex'}
       justifyContent={props.justifyContent || 'center'}
       alignItems={props.alignItems || 'center'}
@@ -20,25 +22,25 @@ export default function ErrorBox(props) {
         flexDirection: { xs: 'column', sm: 'row' },
         color: isInfo ? 'var(--warning)' : 'var(--danger)',
         border: isInfo
-          ? '1px solid rgba(255,226,122,.55)'
-          : '1px solid rgba(255,111,111,.55)',
+          ? '1px solid var(--warning)'
+          : '1px solid var(--danger)',
         borderRadius: '10px',
-        background:
-          isInfo
-            ? 'linear-gradient(180deg, rgba(255,226,122,.12), rgba(255,226,122,.05))'
-            : 'linear-gradient(180deg, rgba(255,111,111,.2), rgba(255,111,111,.08))',
+        background: isInfo ? 'var(--warning-soft)' : 'var(--danger-soft)',
       }}
     >
-      <ErrorOutlineIcon sx={{ fontSize: '24px' }} />
+      {isInfo ? (
+        <InfoOutlinedIcon sx={{ fontSize: '24px' }} />
+      ) : (
+        <ErrorOutlineIcon sx={{ fontSize: '24px' }} />
+      )}
 
       <Typography
         variant="body1"
         component="p"
         sx={{
-          fontSize:
-            isInfo
-              ? { xs: '12px', sm: '14px' }
-              : { xs: '14px', sm: '16px' },
+          fontSize: isInfo
+            ? { xs: '12px', sm: '14px' }
+            : { xs: '14px', sm: '16px' },
           fontFamily: 'IBM Plex Sans',
           textAlign: 'center',
         }}

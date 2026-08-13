@@ -1,7 +1,11 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react';
+import { useTempUnit } from '../../../context/UnitContext';
+import { formatTemperature } from '../../../utilities/UnitUtils';
 
 const TemperatureWeatherDetail = (props) => {
+  const { unit } = useTempUnit();
+
   return (
     <Box
       sx={{
@@ -26,7 +30,7 @@ const TemperatureWeatherDetail = (props) => {
           fontFamily: 'Space Grotesk',
         }}
       >
-        {Math.round(props.temperature)} °C
+        {formatTemperature(props.temperature, unit)}
       </Typography>
       <Typography
         variant="body2"

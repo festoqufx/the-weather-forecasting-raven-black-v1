@@ -11,9 +11,22 @@ export function getWeekDays() {
 export function getDayMonthFromDate() {
   const date = new Date();
   const month = MONTHS[date.getMonth()].slice(0, 3);
-  const day = date.getUTCDate();
+  const day = date.getDate();
 
   return day + ' ' + month;
+}
+
+export function getWeekdayFromDateString(dateString) {
+  if (!dateString) {
+    return '';
+  }
+
+  const date = new Date(`${dateString}T12:00:00`);
+  if (Number.isNaN(date.getTime())) {
+    return '';
+  }
+
+  return DAYS[date.getDay()];
 }
 
 export function transformDateFormat() {
